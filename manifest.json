@@ -1,6 +1,6 @@
 {
   "name": "20Rule",
-  "description": "Base Level Extension",
+  "description": "Protect your eyes with the 20/20/20 rule",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage"],
@@ -9,7 +9,14 @@
     "default_icon": "icon.png"
   },
   "background": {
-    "service_worker": "service-worker.js",
+    "service_worker": "background.js",
     "type": "module"
+  },
+  "minimum_chrome_version": "102",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   }
 }

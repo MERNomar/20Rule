@@ -4,7 +4,7 @@ let runAudio = false;
 const pickedTime = async () => {
   const time = await chrome.storage.local.get(["picked_time"]);
   if (time.picked_time) return time.picked_time;
-  return 20;
+  return 20 * 60 + 1;
 };
 
 setInterval(async () => {

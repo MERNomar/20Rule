@@ -4,7 +4,9 @@ const timePicker = document.querySelectorAll(".time-picker");
 
 timePicker.forEach((item) => {
   item.addEventListener("click", (e) => {
-    chrome.storage.local.set({ picked_time: Number(e.target.innerHTML) });
+    chrome.storage.local.set({
+      picked_time: Number(e.target.innerHTML) * 60 + 1,
+    });
   });
 });
 

@@ -1,3 +1,9 @@
+const timerElement = document.querySelector(".timer");
+
+const timePickerTen = document.querySelector(".time-picker-ten");
+const timePickerFifteen = document.querySelector(".time-picker-fifteen");
+const timePickerTwenty = document.querySelector(".time-picker-twenty");
+
 const audio = new Audio("./alarm.mp3");
 
 const timeFormatter = (timeInSeconds) => {
@@ -9,7 +15,7 @@ const timeFormatter = (timeInSeconds) => {
 const setTimeDOM = async () => {
   const response = await chrome.runtime.sendMessage({ greeting: "hello" });
   console.log(response);
-  document.querySelector(".timer").innerHTML = timeFormatter(response.time);
+  timerElement.innerHTML = timeFormatter(response.time);
   console.log(response);
   if (response.runAudio) {
     audio.play();

@@ -1,8 +1,12 @@
 const timerElement = document.querySelector(".timer");
 
-const timePickerTen = document.querySelector(".time-picker-ten");
-const timePickerFifteen = document.querySelector(".time-picker-fifteen");
-const timePickerTwenty = document.querySelector(".time-picker-twenty");
+const timePicker = document.querySelectorAll(".time-picker");
+
+timePicker.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    chrome.storage.local.set({ picked_time: Number(e.target.innerHTML) });
+  });
+});
 
 const audio = new Audio("./alarm.mp3");
 
@@ -14,17 +18,13 @@ const timeFormatter = (timeInSeconds) => {
 
 const setTimeDOM = async () => {
   const response = await chrome.runtime.sendMessage({ open: true });
-  console.log(response);
   timerElement.innerHTML = timeFormatter(response.time);
-  console.log(response);
   if (response.runAudio) {
     audio.play();
   }
 };
 
-chrome.action.onClicked.addListener(() => {
-  console.log("clicked");
-});
+chrome.action.onClicked.addListener(() => {});
 
 setInterval(async () => {
   setTimeDOM();

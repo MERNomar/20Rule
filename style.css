@@ -1,0 +1,82 @@
+html {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: rgb(89, 0, 255) 3px solid;
+  font-family: "ArialRounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  width: 300px;
+  height: 250px;
+  padding-bottom: 10px;
+  background: linear-gradient(
+    to right,
+    rgba(89, 0, 255, 0),
+    rgba(0, 119, 255, 0.055)
+  );
+}
+
+h1,
+h2 {
+  margin: 0;
+  color: rgba(0, 119, 255, 0.89);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+button {
+  width: 70%;
+  background-color: rgba(82, 159, 247, 0.89);
+  border-radius: 30px;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0px 0px 1px 1px rgb(89, 0, 255);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+}
+
+.values-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3px;
+}
+
+.timer {
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+.time-picker {
+  background-color: rgba(89, 0, 255, 0.384);
+  box-shadow: 0px 2px 1px 1px rgb(89, 0, 255);
+  cursor: pointer;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 5px;
+  font-size: 3rem;
+}
+.time-picker:hover {
+  background-color: rgba(89, 0, 255, 0.425);
+  box-shadow: 0px 1px 1px 1px rgb(89, 0, 255);
+}
+.time-picker:active {
+  background-color: rgba(89, 0, 255, 0.479);
+}
+
+.minutes {
+  font-size: larger;
+  font-weight: bolder;
+}

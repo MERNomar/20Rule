@@ -8,12 +8,12 @@ const audio = new Audio("./alarm.mp3");
 
 const timeFormatter = (timeInSeconds) => {
   const seconds = ("0" + (timeInSeconds % 60)).slice(-2);
-  const minutes = Math.floor(timeInSeconds / 60);
+  const minutes = ("0" + Math.floor(timeInSeconds / 60)).slice(-2);
   return `${minutes}:${seconds}`;
 };
 
 const setTimeDOM = async () => {
-  const response = await chrome.runtime.sendMessage({ greeting: "hello" });
+  const response = await chrome.runtime.sendMessage({ open: true });
   console.log(response);
   timerElement.innerHTML = timeFormatter(response.time);
   console.log(response);

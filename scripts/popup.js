@@ -1,35 +1,37 @@
-const timerElement = document.querySelector(".timer");
+import { setTimeDOM, getPickedTime } from "./functions.js";
 
+const timerElement = document.querySelector(".timer");
 const timePicker = document.querySelectorAll(".time-picker");
 
 timePicker.forEach((item) => {
   item.addEventListener("click", (e) => {
+    const clickedItem = Number(e.target.innerHTML);
     chrome.storage.local.set({
-      picked_time: Number(e.target.innerHTML) * 60 + 1,
+      picked_time: clickedItem,
     });
   });
 });
 
-const audio = new Audio("./alarm.mp3");
-
-const timeFormatter = (timeInSeconds) => {
-  const seconds = ("0" + (timeInSeconds % 60)).slice(-2);
-  const minutes = ("0" + Math.floor(timeInSeconds / 60)).slice(-2);
-  return `${minutes}:${seconds}`;
-};
-
-const setTimeDOM = async () => {
-  const response = await chrome.runtime.sendMessage({ open: true });
-  timerElement.innerHTML = timeFormatter(response.time);
-  if (response.runAudio) {
-    audio.play();
+timePicker.forEach((item) => {
+  if (item.innerHTML == getPickedTime()) {
+    item.style.backgroundColor = "rgba(82, 159, 247, 0.89)";
   }
-};
+});
 
-chrome.action.onClicked.addListener(() => {});
+//A function that on click will change all button bbackground colors to default
+timePicker.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    timePicker.forEach((item) => {
+      item.style.backgroundColor = "rgba(89, 0, 255, 0.384)";
+    });
+  });
+});
 
-setInterval(async () => {
-  setTimeDOM();
-}, 1000);
+// A function that will change the color on click
+timePicker.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    item.style.backgroundColor = "rgba(82, 159, 247, 0.89)";
+  });
+});
 
-setTimeDOM();
+setTimeDOM(timerElement);

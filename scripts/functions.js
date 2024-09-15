@@ -33,4 +33,26 @@ function getPickedTime() {
   return pickedTime;
 }
 
-export { setTimeDOM, getPickedTime };
+function setPickedTime(e) {
+  const clickedItem = Number(e.target.innerHTML);
+  chrome.storage.local.set({
+    picked_time: clickedItem,
+  });
+}
+
+function markPickedButton(item, buttonElements) {
+  // On Button clicked this will remove all picked class name to avoid redundancy.
+  item.addEventListener("click", () => {
+    buttonElements.forEach((item) => {
+      item.classList.remove("picked-time");
+    });
+    // this will add picked item on click
+    item.classList.add("picked-time");
+  });
+  // this will mark the picked item when the popup is opened
+  if (item.innerHTML == getPickedTime()) {
+    item.classList.add("picked-time");
+  }
+}
+
+export { setTimeDOM, getPickedTime, setPickedTime, markPickedButton };

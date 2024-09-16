@@ -1,13 +1,26 @@
-import { setTimeDOM, setPickedTime, markPickedButton } from "./functions.js";
+import {
+  setTimeDOM,
+  setPickedTime,
+  markPickedButton,
+  getTimeSwitch,
+  setTimeSwitch,
+} from "./functions.js";
 
-const timerElement = document.querySelector(".timer");
-const timePicker = document.querySelectorAll(".time-picker");
+const DOMElements = {
+  timerElement: document.querySelector(".timer"),
+  timePicker: document.querySelectorAll(".time-picker"),
+  timeSwitch: document.querySelector(".start-btn"),
+};
 
-timePicker.forEach((item) => {
+DOMElements.timeSwitch.addEventListener("click", (element) => {
+  setTimeSwitch(element);
+});
+
+DOMElements.timePicker.forEach((item) => {
   item.addEventListener("click", (e) => {
     setPickedTime(e);
   });
-  markPickedButton(item, timePicker);
+  markPickedButton(item, DOMElements.timePicker);
 });
 
-setTimeDOM(timerElement);
+setTimeDOM(DOMElements.timerElement);

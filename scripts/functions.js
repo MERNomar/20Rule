@@ -29,7 +29,7 @@ const { picked_time: pickedTime } = await chrome.storage.local.get([
   "picked_time",
 ]);
 function getPickedTime() {
-  if (!pickedTime) return 15;
+  if (!pickedTime) return 20;
   return pickedTime;
 }
 
@@ -55,4 +55,25 @@ function markPickedButton(item, buttonElements) {
   }
 }
 
-export { setTimeDOM, getPickedTime, setPickedTime, markPickedButton };
+async function getTimeSwitch() {
+  const timeSwitch = await chrome.storage.local.get(["time_switch"]);
+  if (timeSwitch) return timeSwitch.time_switch;
+  return false;
+}
+
+async function setTimeSwitch(element) {
+  const currentTimeSwitch = await getTimeSwitch();
+  const res = await chrome.storage.local.set({
+    time_switch: !currentTimeSwitch,
+  });
+  element.target.innerHTML = !currentTimeSwitch ? "Start" : "Pause";
+}
+
+export {
+  setTimeDOM,
+  getPickedTime,
+  setPickedTime,
+  markPickedButton,
+  getTimeSwitch,
+  setTimeSwitch,
+};

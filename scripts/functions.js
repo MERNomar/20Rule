@@ -27,7 +27,10 @@ async function setTimeDOM(timerElement) {
     setDOMTimer(timeCounter, timerElement);
   }, 1000);
 }
-
+/**
+ * Will get current picked time from the local storage and return false if no time found
+ * @getPickedTime
+ */
 async function getPickedTime() {
   const { picked_time: pickedTime } = await chrome.storage.local.get([
     "picked_time",
@@ -35,7 +38,10 @@ async function getPickedTime() {
   if (!pickedTime) return 20;
   return pickedTime;
 }
-
+/**
+ * Will set the picked amount of minutes in the local storage
+ * @setPickedTime
+ */
 function setPickedTime(e) {
   const clickedItem = Number(e.target.innerHTML);
   chrome.storage.local.set({
@@ -43,6 +49,10 @@ function setPickedTime(e) {
   });
 }
 
+/**
+ * Will pick the picked time amount in minutes and the class name picked-time to it
+ * @markPickedButton
+ */
 async function markPickedButton(item, buttonElements) {
   // On Button clicked this will remove all picked class name to avoid redundancy.
   item.addEventListener("click", () => {
@@ -58,14 +68,20 @@ async function markPickedButton(item, buttonElements) {
   }
 }
 
-// get the time from the storage and return it
+/**
+ * get the time from the storage and return it
+ * @getTimeSwitch
+ */
 async function getTimeSwitch() {
   const timeSwitch = await chrome.storage.local.get(["time_switch"]);
   if (timeSwitch) return timeSwitch.time_switch;
   return false;
 }
 
-// Update the time in the dom and the local storage
+/**
+ *Update the time in the dom and the local storage
+ *@setTimeSwitch
+ */
 async function setTimeSwitch(element, OppositeBoolean) {
   const currentTimeSwitch = await getTimeSwitch();
   if (OppositeBoolean) {

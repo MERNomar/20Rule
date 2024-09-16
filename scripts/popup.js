@@ -2,7 +2,6 @@ import {
   setTimeDOM,
   setPickedTime,
   markPickedButton,
-  getTimeSwitch,
   setTimeSwitch,
 } from "./functions.js";
 
@@ -13,7 +12,7 @@ const DOMElements = {
 };
 
 DOMElements.timeSwitch.addEventListener("click", (element) => {
-  setTimeSwitch(element);
+  setTimeSwitch(element.target, true);
 });
 
 DOMElements.timePicker.forEach((item) => {
@@ -24,3 +23,4 @@ DOMElements.timePicker.forEach((item) => {
 });
 
 setTimeDOM(DOMElements.timerElement);
+setTimeSwitch(DOMElements.timeSwitch, false);

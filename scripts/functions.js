@@ -19,16 +19,19 @@ async function setTimeDOM(timerElement) {
 
   setDOMTimer(timeCounter, timerElement);
 
-  setInterval(() => {
-    timeCounter = timeCounter + 1;
+  setInterval(async () => {
+    const currentTimeSwitch = await getTimeSwitch();
+    if (!currentTimeSwitch) {
+      timeCounter = timeCounter + 1;
+    }
     setDOMTimer(timeCounter, timerElement);
   }, 1000);
 }
 
-const { picked_time: pickedTime } = await chrome.storage.local.get([
-  "picked_time",
-]);
-function getPickedTime() {
+async function getPickedTime() {
+  const { picked_time: pickedTime } = await chrome.storage.local.get([
+    "picked_time",
+  ]);
   if (!pickedTime) return 20;
   return pickedTime;
 }
@@ -40,7 +43,7 @@ function setPickedTime(e) {
   });
 }
 
-function markPickedButton(item, buttonElements) {
+async function markPickedButton(item, buttonElements) {
   // On Button clicked this will remove all picked class name to avoid redundancy.
   item.addEventListener("click", () => {
     buttonElements.forEach((item) => {
@@ -50,23 +53,30 @@ function markPickedButton(item, buttonElements) {
     item.classList.add("picked-time");
   });
   // this will mark the picked item when the popup is opened
-  if (item.innerHTML == getPickedTime()) {
+  if (item.innerHTML == (await getPickedTime())) {
     item.classList.add("picked-time");
   }
 }
 
+// get the time from the storage and return it
 async function getTimeSwitch() {
   const timeSwitch = await chrome.storage.local.get(["time_switch"]);
   if (timeSwitch) return timeSwitch.time_switch;
   return false;
 }
 
-async function setTimeSwitch(element) {
+// Update the time in the dom and the local storage
+async function setTimeSwitch(element, OppositeBoolean) {
   const currentTimeSwitch = await getTimeSwitch();
-  const res = await chrome.storage.local.set({
-    time_switch: !currentTimeSwitch,
-  });
-  element.target.innerHTML = !currentTimeSwitch ? "Start" : "Pause";
+  if (OppositeBoolean) {
+    await chrome.storage.local.set({
+      time_switch: !currentTimeSwitch,
+    });
+    element.innerHTML = !currentTimeSwitch ? "Start" : "Pause";
+    chrome.runtime.sendMessage({ timeSwitch: !currentTimeSwitch });
+  } else {
+    element.innerHTML = currentTimeSwitch ? "Start" : "Pause";
+  }
 }
 
 export {

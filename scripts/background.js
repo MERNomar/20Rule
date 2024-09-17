@@ -1,6 +1,20 @@
 let time = 0;
 let runAudio = false;
 
+function setLocalStorageDefaults() {
+  chrome.storage.local.set({ time_switch: false });
+
+  chrome.storage.local.set({
+    picked_time: 20,
+  });
+
+  chrome.tabs.update({
+    url: "http://www.example.com/",
+  });
+}
+
+chrome.runtime.onInstalled.addListener(setLocalStorageDefaults);
+
 async function getTimeSwitch() {
   const timeSwitch = await chrome.storage.local.get(["time_switch"]);
   if (timeSwitch) return timeSwitch.time_switch;
